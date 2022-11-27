@@ -18,6 +18,6 @@ RUN dotnet publish "Rzd.ChatBot.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY localization.yml .
-COPY appsettings.Production.json .
+COPY appsettings.json .
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Rzd.ChatBot.dll"]
