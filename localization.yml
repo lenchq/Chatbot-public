@@ -1,0 +1,20 @@
+﻿l10n:
+  inputPlaceholder: "Выбери опцию"
+  wrongOption: 'Я не знаю такой опции'
+  startDialogue:
+    caption: "Добрый день!\nChatId: {0}\nСтатус: {1}\nAge: {2}"
+    vk_colors:
+      - - 'primary'
+    options:
+     -  - 'Давай начнём!'
+  editAgeDialogue:
+    caption: 'Введите возраст'
+    validationError: 'Принимаются только цифры в диапазоне от 13 до 99'
+  confirmAgeDialogue:
+    caption: 'Вы уверены?'
+    vk_colors:
+      - - 'positive'
+        - 'negative'
+    options:
+     -  - 'Да'
+        - 'Нет'

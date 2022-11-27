@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build .NET 7 app') {
+            steps {
+                script {
+                    withDotNet(sdk: '.NET 7') {
+                        echo "Restoring project..."
+                        dotnetRestore project: 'Rzd.ChatBot.csproj', sdk: '.NET 7'
+                        echo "Done."
+                        echo "Building project..."
+                        dotnetBuild configuration: 'Release', noRestore: true, project: 'Rzd.ChatBot.csproj', sdk: '.NET 7'
+                        sh "Done." 
+                    }  
+                }
+            }
+        }
+        stage('Build image') {
+            steps {
+                sh "Creating Docker image..."
+                sh "docker build -t lenchq/Rzd.ChatBot:latest ."
+                sh "Done."
+            }
+        }
+        stage('SonarQube Scan') {
+            sh "Scanning project..."
+            withSonarQubeEnv {
+                sh "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:myKey"
+                dotnetBuild force: true, noIncremental: true, project: 'Rzd.ChatBot.csproj', sdk: '.NET 7'
+                sh "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+            }
+            sh "Done."
+        }
+        stage('Deploy') {
+            //TODO
+        }
+    }
+}
